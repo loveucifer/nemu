@@ -1,0 +1,33 @@
+[story]
+title = "The Haunted House"
+start_room = "entrance"
+
+[rooms.entrance]
+title = "Front Entrance"
+description = "You stand at the entrance of a creepy old mansion. The door creaks behind you. To the NORTH is a dimly lit hallway."
+exits = { north = "hallway" }
+items = ["rusty_key"]
+
+[rooms.hallway] 
+title = "Dark Hallway"
+description = "A long hallway stretches before you with portraits on the walls. To the SOUTH is the entrance. To the EAST is a parlor."
+exits = { south = "entrance", east = "parlor" }
+items = ["candle"]
+
+[rooms.parlor]
+title = "Dusty Parlor"
+description = "An old sitting room with furniture covered in sheets. To the WEST is the hallway."
+exits = { west = "hallway" }
+items = ["ancient_book"]
+
+[items.rusty_key]
+name = "rusty key"
+description = "An old iron key with intricate patterns."
+
+[items.candle]
+name = "wax candle"
+description = "A partially burned candle that might provide light."
+
+[items.ancient_book]
+name = "ancient book"
+description = "A leather-bound book with strange symbols on the cover."

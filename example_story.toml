@@ -1,0 +1,198 @@
+[story]
+title = "The Quantum Lighthouse"
+author = "BlockyBlocky Creator"
+version = "1.2.0"
+engine_version = ">=1.0.0"
+tags = ["sci-fi", "puzzle", "exploration"]
+
+[config]
+auto_save_interval = 300  # seconds
+max_inventory_weight = 100
+enable_combat = false
+lua_scripting = true
+
+[rooms.start]
+title = "Mysterious Shore"
+description = """
+You stand on a desolate shore, waves lapping at your feet.
+A lighthouse stands in the distance, its light pulsing with an otherworldly glow.
+Seaweed and shells are scattered across the wet sand.
+"""
+atmosphere = "mysterious"
+lighting = "dim_blue"
+exits = { north = "beach", east = "lighthouse_approach" }
+items = ["seashell", "driftwood"]
+npcs = ["old_man"]
+
+[rooms.beach]
+title = "Abandoned Beach"
+description = """
+The beach stretches endlessly in both directions. Strange crystalline formations
+jut from the sand at odd angles, reflecting light in impossible colors.
+A weathered sign points toward the lighthouse.
+"""
+atmosphere = "eerie"
+lighting = "natural"
+exits = { south = "start", east = "lighthouse_approach", west = "cave_entrance" }
+items = ["crystal_shard", "weathered_sign"]
+npcs = []
+
+[rooms.lighthouse_approach]
+title = "Base of the Quantum Lighthouse"
+description = """
+The lighthouse looms above you, impossibly tall and constructed from materials
+you can't identify. Its surface seems to shift between solid and translucent.
+A heavy wooden door stands slightly ajar.
+"""
+atmosphere = "awe-inspiring"
+lighting = "bright_white"
+exits = { west = "start", south = "beach", up = "lighthouse_interior" }
+items = []
+npcs = ["guardian_statue"]
+
+[rooms.cave_entrance]
+title = "Cave Entrance"
+description = """
+A dark cave mouth yawns before you, cool air flowing out with a slight whistle.
+Ancient symbols are carved into the stone above the entrance.
+"""
+atmosphere = "mysterious"
+lighting = "dark"
+exits = { east = "beach", in = "cave_interior" }
+items = ["ancient_symbol_fragment"]
+npcs = []
+
+[rooms.cave_interior]
+title = "Cave Interior"
+description = """
+The cave opens into a large chamber filled with bioluminescent fungi that
+cast an ethereal blue-green glow throughout the space. Ancient murals cover
+the walls, depicting stars and strange geometric patterns.
+"""
+atmosphere = "mystical"
+lighting = "glow"
+exits = { out = "cave_entrance" }
+items = ["bioluminescent_fungus", "ancient_mural_piece"]
+npcs = ["cave_spirit"]
+
+[rooms.lighthouse_interior]
+title = "Lighthouse Interior"
+description = """
+The interior defies the lighthouse's external dimensions, appearing far larger
+than should be possible. Staircases spiral upward and downward, and multiple
+light sources seem to exist in defiance of physics.
+"""
+atmosphere = "impossible"
+lighting = "multicolor"
+exits = { down = "lighthouse_approach", up = "observation_deck" }
+items = ["quantum_key", "impossible_geometry_book"]
+npcs = ["quantum_entity"]
+
+[rooms.observation_deck]
+title = "Observation Deck"
+description = """
+You emerge onto a platform surrounded by a transparent dome that offers a view
+of both the earthly landscape below and what appears to be deep space above.
+Stars and galaxies swirl just beyond the dome.
+"""
+atmosphere = "transcendent"
+lighting = "starlight"
+exits = { down = "lighthouse_interior" }
+items = ["astrolabe", "star_chart"]
+npcs = ["cosmic_guide"]
+
+[items.seashell]
+name = "Iridescent Seashell"
+description = "A beautiful shell that seems to shimmer with inner light."
+weight = 1
+tags = ["collectible", "shiny"]
+
+[items.driftwood]
+name = "Ancient Driftwood"
+description = "Weathered wood that feels unusually warm to the touch."
+weight = 3
+tags = ["tool", "wood"]
+
+[items.crystal_shard]
+name = "Prismatic Crystal Shard"
+description = "A fragment of crystal that bends light in impossible ways."
+weight = 2
+tags = ["valuable", "magic"]
+
+[items.weathered_sign]
+name = "Weathered Sign"
+description = "A wooden sign with faded text pointing toward the lighthouse."
+weight = 5
+tags = ["information", "wood"]
+
+[items.ancient_symbol_fragment]
+name = "Ancient Symbol Fragment"
+description = "A piece of carved stone with symbols in an unknown language."
+weight = 4
+tags = ["artifact", "information"]
+
+[items.bioluminescent_fungus]
+name = "Bioluminescent Fungus"
+description = "A glowing fungus that pulses with a gentle rhythm."
+weight = 1
+tags = ["light_source", "organic"]
+
+[items.ancient_mural_piece]
+name = "Ancient Mural Piece"
+description = "A fragment of an ancient mural depicting celestial bodies."
+weight = 2
+tags = ["artifact", "information"]
+
+[items.quantum_key]
+name = "Quantum Key"
+description = "A key that exists in multiple states simultaneously."
+weight = 0  # Weightless due to quantum properties
+tags = ["tool", "quantum", "essential"]
+
+[items.impossible_geometry_book]
+name = "Impossible Geometry"
+description = "A book containing diagrams that hurt to look at but reveal profound truths."
+weight = 3
+tags = ["information", "knowledge"]
+
+[items.astrolabe]
+name = "Celestial Astrolabe"
+description = "An astrolabe that tracks not just earthly stars, but otherworldly phenomena."
+weight = 8
+tags = ["tool", "navigation", "cosmic"]
+
+[items.star_chart]
+name = "Star Chart of the Quantum Realm"
+description = "A chart showing constellations that exist in parallel dimensions."
+weight = 1
+tags = ["information", "navigation"]
+
+[npcs.old_man]
+name = "The Old Man"
+personality = "wise_and_mysterious"
+memory_span = 10
+dialogue_tree = "old_man_dialogue.toml"
+
+[npcs.guardian_statue]
+name = "Guardian Statue"
+personality = "silent_watchful"
+memory_span = 0  # Statues don't remember
+dialogue_tree = "guardian_dialogue.toml"
+
+[npcs.cave_spirit]
+name = "Cave Spirit"
+personality = "ancient_wise"
+memory_span = 20
+dialogue_tree = "cave_spirit_dialogue.toml"
+
+[npcs.quantum_entity]
+name = "Quantum Entity"
+personality = "paradoxical"
+memory_span = 5
+dialogue_tree = "quantum_entity_dialogue.toml"
+
+[npcs.cosmic_guide]
+name = "Cosmic Guide"
+personality = "enlightened"
+memory_span = 15
+dialogue_tree = "cosmic_guide_dialogue.toml"
