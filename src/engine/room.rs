@@ -8,4 +8,4 @@ pub struct Room {
     #[serde(flatten)]
     pub exits: HashMap<String, String>, // direction -> room_id
     pub items: Vec<String>, // item IDs
-}
+}// Add basic data structures :D
