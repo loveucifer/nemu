@@ -248,4 +248,4 @@ impl Game {
         execute!(io::stdout(), Clear(ClearType::All))?;
         Ok(())
     }
-}
+}// Basic game loop implemented
