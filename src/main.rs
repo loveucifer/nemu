@@ -39,4 +39,4 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     
     Ok(())
-}
+}// CLI commands working nicely :0
