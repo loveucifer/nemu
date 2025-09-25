@@ -251,3 +251,4 @@ impl Game {
 }// Basic game loop implemented
 // Inventory system - take/drop items :D
 // Save system with json files
+// Better error messages
