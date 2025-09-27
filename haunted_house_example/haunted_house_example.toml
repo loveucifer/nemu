@@ -1,0 +1,23 @@
+[story]
+title = "haunted_house_example"
+start_room = "entrance"
+
+[rooms.entrance]
+title = "Front Door"
+description = "A wooden door stands before you. [NORTH] leads to the living room."
+exits = { north = "living_room" }
+items = ["key"]
+
+[rooms.living_room]
+title = "Living Room"
+description = "A cozy room with a fireplace. [SOUTH] leads back to the entrance."
+exits = { south = "entrance" }
+items = ["book"]
+
+[items.key]
+name = "brass key"
+description = "An old brass key."
+
+[items.book]
+name = "leather-bound book"
+description = "A book with strange symbols on its cover."
