@@ -141,8 +141,10 @@ description = "Small red berries that smell sweet."
 cargo build
 
 # Run directly
-cargo run -- create test_story
-cargo run -- play test_story/test_story.toml
+cargo run -- create my_adventure
+# Play included examples:
+cargo run -- play haunted_house.toml
+cargo run -- play ancient_temple.toml
 ```
 
 ### Project Structure
