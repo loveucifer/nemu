@@ -1,222 +1,180 @@
-# BlockyBlocky - Interactive Story Engine
+# Nemu - Text Adventure Engine
 
-An advanced text-based adventure game framework written in Rust. Create, play, and share interactive stories with complex narratives, inventory systems, and more.
+A complete text-based adventure game framework in Rust. Create, play, and share interactive stories with rich narratives and inventory systems.
+
+## Quick Start
+
+1. **Build the project:**
+   ```bash
+   cargo build --release
+   ```
+
+2. **Create a new adventure:**
+   ```bash
+   ./target/release/nemu create my_adventure
+   ```
+
+3. **Play the adventure:**
+   ```bash
+   ./target/release/nemu play my_adventure/my_adventure.toml
+   ```
+
+4. **Try in-game commands like:**
+   - `look` - examine your surroundings
+   - `go north` - move in a direction
+   - `take key` - pick up items
+   - `inventory` - check your items
 
 ## Features
 
-- **Room-based navigation** with rich text descriptions
-- **Advanced inventory system** with item combinations and usage
-- **Save/load functionality** with multiple slots
+- **Room-based navigation** with text descriptions and atmospheric details
+- **Inventory system** with item combinations and usage mechanics
+- **Save/load game states** with multiple slots and quick save/load
 - **Natural language command parsing**
-- **TOML-based story format** for easy authoring
-- **Lua scripting support** for complex game logic
-- **NPC dialogue systems** with personality and memory
-- **Combat mechanics** for action-adventure games
-- **SQLite-based save system** for persistent game states
-- **Achievement tracking** with progress and unlockables
-- **Plugin architecture** for extensibility
-- **Colorful terminal UI** with animations
-- **Command history and tab completion**
-- **Story creation tools and templates**
+- **Story files** in TOML format with scripting capabilities
+- **Complex branching narratives** with flags and conditions
 
 ## Installation
 
+### Prerequisites
+- Rust (latest stable)
+
+### Build from Source
 ```bash
 # Clone the repository
-git clone https://github.com/blockyblocky/engine.git
-cd engine
+git clone https://github.com/yourusername/nemu.git
+cd nemu
 
 # Build the project
 cargo build --release
 
-# The executable will be available as 'bby' in the target/release directory
+# The binary will be available as 'nemu' in target/release/
 ```
 
-## CLI Usage
+## Usage
 
+### Available Commands
 ```bash
-# Create a new story
-bby create my-adventure
-
-# Play a story
-bby play story.toml
+# Create a new story template
+./target/release/nemu create my-adventure
 
 # Validate a story file
-bby validate story.toml
+./target/release/nemu validate my-adventure.toml
 
-# Continue last game
-bby continue
-
-# Load a saved game
-bby load slot1
-
-# Export to different format
-bby export story.toml --format web
-
-# Test a story with automation
-bby test story.toml
-
-# Lint a story for best practices
-bby lint story.toml
+# Play a story
+./target/release/nemu play my-adventure.toml
 ```
+
+### In-Game Commands
+Once playing a story, use these commands:
+- `look` - Look around the current room
+- `go [direction]` - Move in a direction (north, south, east, west)
+- `n/s/e/w` - Short forms for directions
+- `take [item]` - Pick up an item
+- `drop [item]` - Drop an item
+- `inventory` - Check your inventory
+- `help` - Show available commands
+- `quit` - Exit the game
 
 ## Story Format
 
-Stories are written in TOML format with support for complex narratives:
+Stories are written in TOML format. Here's an example:
 
 ```toml
 [story]
-title = "The Quantum Lighthouse"
-author = "Your Name"
-version = "1.0.0"
-engine_version = ">=1.0.0"
-tags = ["sci-fi", "puzzle", "exploration"]
+title = "The Mysterious Forest"
+start_room = "forest_entrance"
 
-[config]
-auto_save_interval = 300  # seconds
-max_inventory_weight = 100
-enable_combat = true
-lua_scripting = true
+[rooms.forest_entrance]
+title = "Dark Forest Entrance"
+description = "You stand at the edge of a dark forest. Ancient trees loom overhead."
+exits = { north = "deep_forest", east = "clearing" }
+items = ["stick"]
 
-[rooms.lab]
-title = "Quantum Research Lab"
-description = """
-Holographic displays flicker with incomprehensible equations. The air
-hums with barely contained energy from the quantum field generator.
-A coffee mug sits abandoned on a desk - still warm.
-"""
-atmosphere = "mysterious"
-lighting = "dim_blue"
-exits = { north = "corridor", up = "observation_deck" }
-items = ["quantum_stabilizer", "research_notes", "coffee_mug"]
-npcs = ["dr_chen"]
+[rooms.deep_forest]
+title = "Deep in the Forest"
+description = "Thick branches block most sunlight. You hear mysterious sounds."
+exits = { south = "forest_entrance" }
+items = ["mushroom", "berries"]
 
-[rooms.lab.on_enter]
-script = """
-if player.has_flag("first_visit_lab") then
-    game.show_message("You've been here before...")
-else
-    game.set_flag("first_visit_lab", true)
-    game.show_message("The lab feels familiar yet alien.")
-end
-"""
+[items.stick]
+name = "wooden stick"
+description = "A sturdy stick that might be useful."
 
-[items.quantum_stabilizer]
-name = "Quantum Field Stabilizer"
-description = "A sleek device that pulses with ethereal light."
-weight = 5
-tags = ["tool", "quantum", "valuable"]
-use_script = "quantum_mechanics.lua"
+[items.mushroom]
+name = "strange mushroom"
+description = "A glowing mushroom that seems to pulse with light."
 
-[npcs.dr_chen]
-name = "Dr. Sarah Chen"
-personality = "brilliant_but_scattered"
-memory_span = 10  # remembers last 10 interactions
-dialogue_tree = "chen_conversations.toml"
-
-[achievements.first_steps]
-id = "first_steps"
-name = "First Steps"
-description = "Start your first adventure"
-secret = false
-points = 10
-
-[plugins]
-enabled = ["weather", "time"]
+[items.berries]
+name = "red berries"
+description = "Small red berries that smell sweet."
 ```
 
-## Architecture
+## Quick Start Example
 
-BlockyBlocky follows a modular architecture:
+1. **Create a new story:**
+   ```bash
+   cargo run -- create my_adventure
+   ```
 
-- `core/` - Core data structures and game logic
-- `game/` - Main game engine and state management
-- `cli/` - Command-line interface and user commands
-- `story/` - Story parsing and validation
-- `save/` - Save/load functionality with SQLite
-- `ui/` - Terminal user interface with colors and input handling
+2. **Look at the generated story:**
+   ```bash
+   cat my_adventure/my_adventure.toml
+   ```
 
-### Core Components
+3. **Play the story:**
+   ```bash
+   cargo run -- play my_adventure/my_adventure.toml
+   ```
 
-#### Game Engine
-The main game engine handles command processing, state updates, and game flow. It implements the `GameEngine` trait which defines standard operations like processing commands, updating the game state, and managing saves.
-
-#### Story Format
-Stories are defined in TOML files with a hierarchical structure supporting:
-- Rooms with descriptions and navigation
-- Items with properties and scripting
-- NPCs with dialogue trees and personalities
-- Achievements and game progression
-- Lua scripts for complex logic
-
-#### Scripting System
-Lua scripting is integrated for complex game logic that goes beyond the built-in mechanics. Scripts can modify game state, show messages, and interact with the player.
-
-#### Achievement System
-Achievements are tracked through an event-based system that responds to player actions:
-- Room exploration
-- Item collection
-- Combat victories
-- Puzzle completion
-- Story progression
-
-#### Plugin Architecture
-The plugin system allows for extensibility with features like:
-- Weather systems
-- Time/day cycles
-- Custom gameplay mechanics
-- Enhanced UI elements
+4. **In the game, try:**
+   - `look` - to see your surroundings
+   - `go north` - to move to another room
+   - `take key` - to pick up an item
+   - `inventory` - to see what you're carrying
 
 ## Development
 
-To contribute to BlockyBlocky:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Run `cargo test` to ensure everything works
-6. Submit a pull request
-
-### Building from Source
-
+### Building for Development
 ```bash
-# Clone the repository
-git clone https://github.com/blockyblocky/engine.git
-cd engine
-
 # Build in debug mode
 cargo build
 
-# Build in release mode
-cargo build --release
-
-# Run tests
-cargo test
-
-# Format code
-cargo fmt
-
-# Check for linting issues
-cargo clippy
+# Run directly
+cargo run -- create test_story
+cargo run -- play test_story/test_story.toml
 ```
+
+### Project Structure
+```
+src/
+├── main.rs           # CLI entry point
+├── lib.rs           # Library exports
+├── engine/
+│   ├── mod.rs       # Game engine module
+│   ├── game.rs      # Main game state
+│   ├── room.rs      # Room management
+│   ├── item.rs      # Item system
+│   └── parser.rs    # Command parsing
+├── story/
+│   ├── mod.rs       # Story loading
+│   └── loader.rs    # TOML parser
+└── cli/
+    ├── mod.rs       # CLI commands
+    ├── play.rs      # Play command
+    └── create.rs    # Story creation
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Test your changes
+5. Commit your changes (`git commit -m 'Add some amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
 ## License
 
 MIT
-
-## Contributing
-
-We welcome contributions to BlockyBlocky! Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
-
-## Acknowledgments
-
-- The Rust community for the excellent ecosystem
-- TOML authors for the clean configuration format
-- Crossterm for terminal manipulation
-- MLua for Lua integration
-- All open-source libraries that made this project possible
-
-## Support
-
-For support, please open an issue in the GitHub repository or contact the maintainers.// Documentation complete

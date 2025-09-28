@@ -16,5 +16,9 @@ Thumbs.db
 *.log
 logs/
 
-# User data
+# Save files
 .saves/
+
+# User data
+**/test_*.toml
+**/*_backup.toml

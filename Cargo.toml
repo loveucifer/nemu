@@ -1,13 +1,13 @@
 [package]
-name = "blockyblocky"
+name = "nemu"
 version = "0.1.0"
 edition = "2021"
 description = "An interactive story engine for creating text-based adventure games"
-authors = ["BlockyBlocky Contributors"]
+authors = ["Nemu Contributors"]
 license = "MIT"
 
 [[bin]]
-name = "bby"
+name = "nemu"
 path = "src/main.rs"
 
 [dependencies]

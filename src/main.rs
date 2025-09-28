@@ -6,8 +6,8 @@ mod engine;
 mod story;
 
 #[derive(Parser)]
-#[command(name = "bby", about = "BlockyBlocky - Text Adventure Engine")]
-enum BbyCommand {
+#[command(name = "nemu", about = "Nemu - Text Adventure Engine")]
+enum NemuCommand {
     /// Play a story
     Play {
         file: PathBuf,
@@ -24,16 +24,16 @@ enum BbyCommand {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let command = BbyCommand::parse();
+    let command = NemuCommand::parse();
     
     match command {
-        BbyCommand::Play { file } => {
+        NemuCommand::Play { file } => {
             cli::play::handle_play(file).await?;
         },
-        BbyCommand::Create { name } => {
+        NemuCommand::Create { name } => {
             cli::create::handle_create(name).await?;
         },
-        BbyCommand::Validate { file } => {
+        NemuCommand::Validate { file } => {
             cli::validate::handle_validate(file).await?;
         },
     }

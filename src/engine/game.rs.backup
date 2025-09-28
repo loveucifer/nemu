@@ -1,11 +1,5 @@
 use crate::story::loader::Story;
 use crate::engine::{room::Room, parser::{parse_command, Command}};
-
-// Import for tests within this file
-#[cfg(test)]
-use crate::story::loader::StoryInfo;
-#[cfg(test)]
-use crate::engine::item::Item;
 use crossterm::{
     execute,
     terminal::{Clear, ClearType},
@@ -15,6 +9,18 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use std::fs;
 use std::io::{self, Write};
+
+#[derive(Debug, Serialize, Deserialize)]
+struct SavedGame {
+    current_room: String,
+    inventory: HashSet<String>,
+}
+
+pub struct Game {
+    story: Story,
+    current_room: String,
+    inventory: HashSet<String>,
+}
 
 #[derive(Debug)]
 pub enum GameError {
@@ -34,18 +40,6 @@ impl std::fmt::Display for GameError {
 }
 
 impl std::error::Error for GameError {}
-
-pub struct Game {
-    story: Story,
-    current_room: String,
-    inventory: HashSet<String>,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct SavedGame {
-    current_room: String,
-    inventory: HashSet<String>,
-}
 
 impl Game {
     pub fn new(story: Story) -> Result<Self, Box<dyn std::error::Error>> {
@@ -98,22 +92,22 @@ impl Game {
     }
     
     async fn process_command(&mut self, input: &str) -> Result<String, GameError> {
-        match parse_command(input) {
-            Command::Look => self.look(),
-            Command::Go(direction) => self.go(&direction),
-            Command::North => self.go("north"),
-            Command::South => self.go("south"),
-            Command::East => self.go("east"),
-            Command::West => self.go("west"),
-            Command::Take(item) => self.take(&item),
-            Command::Drop(item) => self.drop(&item),
-            Command::Inventory => self.show_inventory(),
-            Command::Save(filename) => self.save(&filename),
-            Command::Load(filename) => self.load(&filename),
-            Command::ListSaves => Ok(self.list_saves()),
-            Command::Help => Ok(self.help()),
-            Command::Unknown => Ok("I don't understand that command. Type 'help' for available commands. :0".to_string()),
-        }
+        match parse_command(&command) {
+                Command::Look => self.look(),
+                Command::Go(direction) => self.go(&direction),
+                Command::North => self.go("north"),
+                Command::South => self.go("south"),
+                Command::East => self.go("east"),
+                Command::West => self.go("west"),
+                Command::Take(item) => self.take(&item),
+                Command::Drop(item) => self.drop(&item),
+                Command::Inventory => self.show_inventory(),
+                Command::Save(filename) => self.save(&filename),
+                Command::Load(filename) => self.load(&filename),
+                Command::ListSaves => Ok(self.list_saves()),
+                Command::Help => Ok(self.help()),
+                Command::Unknown => Ok("I don't understand that command. Type 'help' for available commands. :0".to_string()),
+            }
     }
     
     fn look(&self) -> Result<String, GameError> {
@@ -235,6 +229,22 @@ impl Game {
         }
     }
     
+    fn help(&self) -> String {
+        "Available commands:
+- look: Look around the current room
+- go [direction]: Move in a direction (north, south, east, west)
+- n/s/e/w: Short forms for directions
+- take [item]: Pick up an item
+- drop [item]: Drop an item
+- inventory: Check your inventory
+- save [filename]: Save the current game
+- load [filename]: Load a saved game
+- help: Show this help
+- quit: Exit the game
+
+Example: 'go north' or 'take key' :D".to_string()
+    }
+    
     fn save(&self, filename: &str) -> Result<String, GameError> {
         let save_data = SavedGame {
             current_room: self.current_room.clone(),
@@ -257,43 +267,7 @@ impl Game {
         Ok(format!("Game loaded from {}", filename))
     }
     
-    fn get_save_files(&self) -> Vec<String> {
-        let mut saves = Vec::new();
-        if let Ok(entries) = fs::read_dir(".") {
-            for entry in entries {
-                if let Ok(entry) = entry {
-                    let path = entry.path();
-                    if path.extension().map_or(false, |ext| ext == "save") {
-                        if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-                            saves.push(name.to_string());
-                        }
-                    }
-                }
-            }
-        }
-        saves
-    }
-    
-    fn list_saves(&self) -> String {
-        let saves = self.get_save_files();
-        if saves.is_empty() {
-            "No save files found. :0".to_string()
-        } else {
-            let mut output = "Available saves:\n".to_string();
-            for save in saves {
-                output.push_str(&format!("- {}\n", save));
-            }
-            // Remove the trailing newline
-            if output.ends_with('\n') {
-                output.pop();
-            }
-            output
-        }
-    }
-    
-    fn help(&self) -> String {
-        "Available commands:\n- look: Look around the current room\n- go [direction]: Move in a direction (north, south, east, west)\n- n/s/e/w: Short forms for directions\n- take [item]: Pick up an item\n- drop [item]: Drop an item\n- inventory: Check your inventory\n- save [filename]: Save the current game\n- load [filename]: Load a saved game\n- saves: List available saves\n- help: Show this help\n- quit: Exit the game\n\nExample: 'go north' or 'take key' :D".to_string()
-    }
+    fn get_save_files(&self) -> Vec<String> {\n        let mut saves = Vec::new();\n        if let Ok(entries) = fs::read_dir(\".\") {\n            for entry in entries {\n                if let Ok(entry) = entry {\n                    let path = entry.path();\n                    if path.extension().map_or(false, |ext| ext == \"save\") {\n                        if let Some(name) = path.file_name().and_then(|n| n.to_str()) {\n                            saves.push(name.to_string());\n                        }\n                    }\n                }\n            }\n        }\n        saves\n    }\n    \n    fn list_saves(&self) -> String {\n        let saves = self.get_save_files();\n        if saves.is_empty() {\n            \"No save files found. :0\".to_string()\n        } else {\n            let mut output = \"Available saves:\\n\".to_string();\n            for save in saves {\n                output.push_str(&format!(\"- {}\\n\", save));\n            }\n            // Remove the trailing newline\n            if output.ends_with('\\n') {\n                output.pop();\n            }\n            output\n        }\n    }
     
     fn show_room(&self) -> Result<(), Box<dyn std::error::Error>> {
         let room = self.get_current_room()?;
@@ -531,8 +505,8 @@ mod tests {
         rooms.insert(
             "start".to_string(), 
             Room {
-                title: "Start Room".to_string(),
-                description: "A starting room with exits north".to_string(),
+                title = "Start Room".to_string(),
+                description = "A starting room with exits north".to_string(),
                 exits,
                 items: vec!["key".to_string()],
             }
@@ -564,7 +538,7 @@ mod tests {
         let output = result.unwrap();
         assert!(output.contains("Start Room"));
         assert!(output.contains("A starting room with exits north"));
-        assert!(output.contains("Brass Key")); // Should show the item name in the room
+        assert!(output.contains("key")); // Should show the item in the room
         assert!(output.contains("north")); // Should show the exit
     }
 

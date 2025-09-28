@@ -1,0 +1,99 @@
+[story]
+title = "The Lost Temple"
+start_room = "jungle_path"
+
+[rooms.jungle_path]
+title = "Dense Jungle Path"
+description = """
+You are on a narrow path cutting through dense jungle. Ancient stone blocks are scattered around.
+Vines hang low from towering trees. To the NORTH, you glimpse what might be a temple entrance.
+To the WEST, the path continues deeper into the jungle.
+"""
+north = "temple_entrance"
+west = "jungle_deeper"
+items = ["machete", "water_bottle"]
+
+[rooms.temple_entrance]
+title = "Ancient Temple Entrance"
+description = """
+Massive stone blocks form an imposing archway. Strange symbols are carved into the entrance.
+The opening leads into darkness. You can go SOUTH back to the jungle path or INSIDE the temple.
+"""
+south = "jungle_path"
+inside = "temple_hall"
+items = ["torch", "ancient_coin"]
+
+[rooms.temple_hall]
+title = "Temple Hall"
+description = """
+Candles flicker mysteriously in this vast hall. Stone pillars reach up into darkness.
+Spider webs cover the walls, and ancient murals tell forgotten stories.
+You can go BACK outside or proceed EAST deeper into the temple.
+"""
+back = "temple_entrance"
+east = "treasure_chamber"
+items = ["statue", "dust"]
+
+[rooms.treasure_chamber]
+title = "Treasure Chamber"
+description = """
+Gold and jewels glitter in the torchlight! This is what you came for!
+But be careful - ancient traps may still be active.
+You can go WEST back to the hall.
+"""
+west = "temple_hall"
+items = ["gold_chalice", "jeweled_crown", "ancient_sword"]
+
+[rooms.jungle_deeper]
+title = "Jungle Depths"
+description = """
+The jungle grows thicker here. Strange sounds echo from the canopy above.
+You spot animal tracks and signs of ancient civilization.
+You can go EAST back to the jungle path.
+"""
+east = "jungle_path"
+items = ["tropical_fruit", "exotic_feather"]
+
+[items.machete]
+name = "rusty machete"
+description = "A heavy blade used for cutting through jungle vegetation."
+
+[items.water_bottle]
+name = "leather water bottle"
+description = "A sturdy container for water, essential for the journey."
+
+[items.torch]
+name = "wooden torch"
+description = "A stick with combustible material - essential for exploring dark places."
+
+[items.ancient_coin]
+name = "ornate coin"
+description = "A gold coin with symbols you don't recognize."
+
+[items.statue]
+name = "stone statue"
+description = "A carved figure with a knowing smile - it seems to watch you."
+
+[items.dust]
+name = "mysterious dust"
+description = "Ancient particles that shimmer in moonlight."
+
+[items.gold_chalice]
+name = "ornate gold chalice"
+description = "A precious chalice encrusted with gems - worth a fortune!"
+
+[items.jeweled_crown]
+name = "jeweled crown"
+description = "An elaborate crown set with precious stones - a royal treasure!"
+
+[items.ancient_sword]
+name = "ancient sword"
+description = "A weapon of quality, untouched by time - still sharp!"
+
+[items.tropical_fruit]
+name = "tropical fruit"
+description = "A sweet, exotic fruit - good for sustenance."
+
+[items.exotic_feather]
+name = "exotic feather"
+description = "A colorful feather from a rare bird species."
