@@ -40,3 +40,4 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     Ok(())
 }// CLI commands working nicely :0
+// v1.0 ready to ship :D
